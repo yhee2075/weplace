@@ -1,0 +1,67 @@
+.sec_section {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1%;
+  border: 1px solid gray;
+  border-radius: 15px;
+}
+
+h2 {
+  display: block;
+}
+
+.review_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+}
+
+.swiper {
+  width: 85% !important;
+  margin-left: 0 !important;
+}
+
+.reivew_menu {
+  display: inline;
+  padding: 5px 7px;
+  font-weight: 400;
+  font-size: small;
+  background-color: rgb(122, 202, 100);
+  border-radius: 15px;
+  color: white;
+}
+
+.reivew__slide {
+  box-sizing: border-box;
+  height: 120px;
+  padding: 3%;
+  border: 1px solid red;
+  border-radius: 15px;
+}
+
+.review_wdate {
+  position: absolute;
+  top: 3%;
+  right: 3%;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: rgb(122, 202, 100) !important;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 1.3rem !important;
+  font-weight: 600 !important;
+}
+
+.more {
+  box-sizing: border-box;
+  height: 120px;
+  width: 120px;
+  text-align: center;
+  border: 1px solid gray;
+  border-radius: 15px;
+}
