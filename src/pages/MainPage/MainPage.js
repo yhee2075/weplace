@@ -1,7 +1,6 @@
 import React from 'react';
-import '../../pages/MainPage/MainPage.css';
-import Review from '../../components/Review';
-import Recommend from '../../components/Recommend';
+import Review from '../../components/Mainpage/Review';
+import Recommend from '../../components/Mainpage/Recommend';
 import './MainPage.css';
 
 const MainPage = () => {

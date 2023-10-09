@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import './Recommend.css';
+import Cards from '../common/Cards';
 
-const Recommend = () => {
+const Recommend = ({contents}) => {
   const [recommend, setRecommend] = useState('');
 
   useEffect(() => {
@@ -17,14 +18,18 @@ const Recommend = () => {
   };
 
   return (
-    <div>
-      <section className="first_sec">
-        <div className="random_baner">
-          <h2>오늘의 식당 추천</h2>
-          <input type="text" placeholder={recommend} />
+    <Cards
+      contents={
+        <div>
+          <section className="flex justify-center">
+            <div className="flex justify-center items-center gap-[5%]">
+              <h2>오늘의 식당 추천</h2>
+              <input type="text" placeholder={recommend} />
+            </div>
+          </section>
         </div>
-      </section>
-    </div>
+      }
+    />
   );
 };
 
