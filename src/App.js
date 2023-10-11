@@ -1,11 +1,11 @@
 import './App.css';
 import MainPage from './pages/MainPage/MainPage';
-import Nav from './components/Nav';
+import Header from './components/Header';
 
 function App() {
   return (
     <div>
-      <Nav />
+      <Header />
       <MainPage />
     </div>
   );

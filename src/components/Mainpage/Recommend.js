@@ -18,18 +18,20 @@ const Recommend = ({contents}) => {
   };
 
   return (
-    <Cards
-      contents={
-        <div>
-          <section className="flex justify-center">
-            <div className="flex justify-center items-center gap-[5%] p-[3%]">
-              <h2 className=" block">오늘의 식당 추천</h2>
-              <input type="text" placeholder={recommend} />
+    <div className="view_wrap">
+      <Cards
+        contents={
+          <div>
+            <div className="flex justify-center">
+              <div className="flex justify-center items-center gap-[5%] p-[3%]">
+                <h2 className=" block">오늘의 식당 추천</h2>
+                <input type="text" placeholder={recommend} />
+              </div>
             </div>
-          </section>
-        </div>
-      }
-    />
+          </div>
+        }
+      />
+    </div>
   );
 };
 

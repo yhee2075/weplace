@@ -36,7 +36,7 @@ const Review = () => {
   //('⭐⭐⭐');
 
   return (
-    <div>
+    <div className="view_wrap">
       <div>
         <h2>최신 리뷰</h2>
 
