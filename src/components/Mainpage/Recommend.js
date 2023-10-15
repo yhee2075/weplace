@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
-import './Recommend.css';
 import Cards from '../common/Cards';
 
 const Recommend = ({contents}) => {
@@ -18,7 +17,7 @@ const Recommend = ({contents}) => {
   };
 
   return (
-    <div className="view_wrap">
+    <div className="view_wrap mt-8">
       <Cards
         contents={
           <div>

@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-.view_wrap {
-  margin: 0 100px;
+body {
+  background-color: #f1f5f9;
 }
 
-body {
-  background-color: #f0fdf4;
+.view_wrap {
+  margin: 0 10%;
 }
