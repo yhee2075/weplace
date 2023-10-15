@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 const Cartegory = () => {
   const cartegoryArr = [
@@ -37,14 +38,15 @@ const Cartegory = () => {
       <h2>카테고리</h2>
       <div className="grid grid-cols-2 grid-rows-2 md:grid-cols-4 gap-4 font-extrabold text-lg">
         {cartegoryArr.map(cartegory => (
-          <button
+          <Link
+            to="/cartegory"
             key={cartegory.idx}
             className={`${
               cartegory.idx === 0 ? 'col-span-2 bg-green-500 text-white' : 'bg-white text-green-500'
             }  p-4 rounded-md shadow-md text-center`}
           >
             {cartegory.title}
-          </button>
+          </Link>
         ))}
       </div>
     </div>
