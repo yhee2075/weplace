@@ -17,7 +17,7 @@ const Recommend = ({contents}) => {
   };
 
   return (
-    <div className="view_wrap mt-8">
+    <div className="view_wrap mt-28">
       <Cards
         contents={
           <div>

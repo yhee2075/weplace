@@ -1,8 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-const Cartegory = () => {
-  const cartegoryArr = [
+const Category = () => {
+  const categoryArr = [
     {
       idx: 0,
       title: '전체보기',
@@ -37,15 +37,15 @@ const Cartegory = () => {
     <div className="view_wrap">
       <h2>카테고리</h2>
       <div className="grid grid-cols-2 grid-rows-2 md:grid-cols-4 gap-4 font-extrabold text-lg">
-        {cartegoryArr.map(cartegory => (
+        {categoryArr.map(category => (
           <Link
-            to="/cartegory"
-            key={cartegory.idx}
+            to="/category"
+            key={category.idx}
             className={`${
-              cartegory.idx === 0 ? 'col-span-2 bg-green-500 text-white' : 'bg-white text-green-500'
+              category.idx === 0 ? 'col-span-2 bg-green-500 text-white' : 'bg-white text-green-500'
             }  p-4 rounded-md shadow-md text-center`}
           >
-            {cartegory.title}
+            {category.title}
           </Link>
         ))}
       </div>
@@ -53,4 +53,4 @@ const Cartegory = () => {
   );
 };
 
-export default Cartegory;
+export default Category;

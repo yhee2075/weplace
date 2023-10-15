@@ -3,7 +3,7 @@ import MainPage from './pages/MainPage/MainPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import {Outlet, Routes, Route} from 'react-router-dom';
-import Cartegory from './pages/Cartegory/Cartegory';
+import CategoryPage from './pages/CategoryPage/CategoryPage';
 
 const Layout = () => {
   return (
@@ -21,7 +21,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
-          <Route path="cartegory" element={<Cartegory />} />
+          <Route path="category" element={<CategoryPage />} />
         </Route>
       </Routes>
     </div>
