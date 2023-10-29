@@ -37,10 +37,11 @@ const Category = () => {
     <div className="view_wrap">
       <h2>카테고리</h2>
       <div className="grid grid-cols-2 grid-rows-2 md:grid-cols-4 gap-4 font-extrabold text-lg">
-        {categoryArr.map(category => (
+        {categoryArr.map((category, idx) => (
           <Link
             to="/category"
-            key={category.idx}
+            state={{idx: category.idx}}
+            key={idx}
             className={`${
               category.idx === 0 ? 'col-span-2 bg-green-500 text-white' : 'bg-white text-green-500'
             }  p-4 rounded-md shadow-md text-center`}
