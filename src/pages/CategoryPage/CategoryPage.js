@@ -79,7 +79,7 @@ const CategoryPage = () => {
         ))}
       </div>
       <div className="bg-green-100 mt-8 py-4">
-        <div className="tag view_wrap flex gap-2 flex-wrap ">
+        <div className="tag view_wrap flex gap-2 flex-wrap h-[80px] overflow-y-auto">
           {tagList.map(tag => (
             <button
               key={tag.idx}
@@ -88,32 +88,32 @@ const CategoryPage = () => {
           ))}
         </div>
       </div>
-      <div className="review view_wrap grid md:grid-cols-3 grid-cols-2 gap-5 mt-4">
+      <div className="review view_wrap grid md:grid-cols-3 grid-cols-2 gap-5 mt-4 ">
         {reviewList.map((review, idx) => (
-          <div key={idx} className="flex">
+          <button key={idx} className="flex h-[240px]">
             <div className="bg-white rounded-md p-4 w-full shadow-md">
               <div className="flex justify-between h-7 items-center">
                 <div className="px-3 p-1 text-sm bg-green-500 rounded-full text-white shadow-sm">{review.category}</div>
                 <div className=" text-4xl text-gray-500 hover:text-gray-400">♥️</div>
               </div>
-              <div className=" font-extrabold text-xl">{review.name}</div>
+              <div className=" font-extrabold text-xl text-start">{review.name}</div>
               <div className="flex gap-2">
                 <div>{review.star}</div>
                 <div>{review.review}</div>
                 <div>{review.favorite}</div>
               </div>
-              <div className="bg-green-100 rounded-md p-4">
+              <div className="bg-green-100 rounded-md p-4 overflow-y-auto h-[120px] flex items-start flex-wrap gap-2">
                 {review.tag.map((tag, idx) => (
                   <div
                     key={idx}
-                    className="inline px-4 p-1 font-medium text-base bg-white rounded-full text-green-500 shadow-sm shadow-green-300"
+                    className="inline px-4 p-1 font-medium text-sm bg-white rounded-full text-green-500 shadow-sm shadow-green-300"
                   >
                     {`# ${tag}`}
                   </div>
                 ))}
               </div>
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </div>
