@@ -17,14 +17,14 @@ const Recommend = ({contents}) => {
   };
 
   return (
-    <div className="view_wrap mt-28">
+    <div className="mt-28">
       <Cards
         contents={
           <div>
             <div className="flex justify-center">
               <div className="flex justify-center gap-[5%] p-[3%] w-[50vw]">
                 <h2 className="flex items-center text-2xl font-semibold mb-3 h-[100%]">오늘의 식당 추천</h2>
-                <input type="text" placeholder={recommend} />
+                <input type="text" placeholder={recommend} className=" md:inline hidden" />
               </div>
             </div>
           </div>

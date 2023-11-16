@@ -37,55 +37,52 @@ const Review = () => {
   //('⭐⭐⭐');
 
   return (
-    <div className="view_wrap">
-      <div>
-        <h2 className="text-2xl font-semibold mb-3">최신 리뷰</h2>
-
-        <div className="w-full">
-          <div className="review_swiper flex justify-center h-[180px] gap-4">
-            <Swiper
-              modules={[Navigation, Pagination, Scrollbar, A11y]}
-              spaceBetween={20}
-              breakpoints={{
-                1200: {
-                  slidesPerView: 3, // 한번에 보이는 슬라이드 개수
-                },
-                768: {
-                  slidesPerView: 2,
-                },
-                0: {
-                  slidesPerView: 1,
-                },
-              }}
-              navigation
-              autoplay={{delay: 1000}}
-              // onSwiper={swiper => console.log(swiper)}
-              // onSlideChange={() => console.log('slide change')}
-            >
-              {reviews.map((review, idx) => (
-                <SwiperSlide key={idx}>
-                  <Cards
-                    contents={
-                      <div className=" reivew__slide flex flex-col items-start w-full p-1">
-                        <div className="w-full flex justify-between items-center">
-                          <div className=" inline px-3 p-1 font-normal text-xs bg-green-500 rounded-2xl text-white">
-                            {review.menu}
-                          </div>
-                          <div className="font-normal text-sm">{review.wdate}</div>
+    <div>
+      <h2 className="text-2xl font-semibold mb-3">최신 리뷰</h2>
+      <div className="w-full">
+        <div className="review_swiper flex justify-center h-[180px] gap-4">
+          <Swiper
+            modules={[Navigation, Pagination, Scrollbar, A11y]}
+            spaceBetween={20}
+            breakpoints={{
+              1200: {
+                slidesPerView: 3, // 한번에 보이는 슬라이드 개수
+              },
+              768: {
+                slidesPerView: 2,
+              },
+              0: {
+                slidesPerView: 1,
+              },
+            }}
+            navigation
+            autoplay={{delay: 1000}}
+            // onSwiper={swiper => console.log(swiper)}
+            // onSlideChange={() => console.log('slide change')}
+          >
+            {reviews.map((review, idx) => (
+              <SwiperSlide key={idx}>
+                <Cards
+                  contents={
+                    <div className=" reivew__slide flex flex-col items-start w-full p-1">
+                      <div className="w-full flex justify-between items-center">
+                        <div className=" inline px-3 p-1 font-normal text-xs bg-green-500 rounded-2xl text-white">
+                          {review.menu}
                         </div>
-                        <div>{reviewStar(review.star)}</div>
-                        <div className=" text-xl font-bold">{review.name}</div>
-                        <div className=" text-base">"{review.comment}"</div>
+                        <div className="font-normal text-sm">{review.wdate}</div>
                       </div>
-                    }
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-            <Link to="/category">
-              <button className="h-[90%] bg-green-500 text-white p-4 rounded-md shadow-md">MORE</button>
-            </Link>
-          </div>
+                      <div>{reviewStar(review.star)}</div>
+                      <div className=" text-xl font-bold">{review.name}</div>
+                      <div className=" text-base">"{review.comment}"</div>
+                    </div>
+                  }
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <Link to="/category">
+            <button className="h-[90%] bg-green-500 text-white p-4 rounded-md shadow-md">MORE</button>
+          </Link>
         </div>
       </div>
     </div>

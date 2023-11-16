@@ -1,14 +1,19 @@
 import React from 'react';
 import Button from './common/Button';
+import MainView from './common/MainView';
 const Header = () => {
   return (
-    <div className=" h-20 w-full p-2 border-b border-gray-200 bg-white fixed top-0">
-      <div className="view_wrap flex justify-between h-full items-center">
-        <a href="/">
-          <h1 className=" font-semibold text-4xl text-green-700">Weplace</h1>
-        </a>
-        <Button contants={'로그인'} />
-      </div>
+    <div className="w-full border-b border-gray-200 bg-white fixed top-0">
+      <MainView
+        contents={
+          <div className="flex justify-between items-center h-20 p-2">
+            <a href="/">
+              <h1 className=" font-semibold text-4xl text-green-700">Weplace</h1>
+            </a>
+            <Button contants={'로그인'} />
+          </div>
+        }
+      />
     </div>
   );
 };
