@@ -35,7 +35,7 @@ const Category = () => {
 
   return (
     <div className="view_wrap">
-      <h2>카테고리</h2>
+      <h2 className=" text-2xl font-semibold mb-3">카테고리</h2>
       <div className="grid grid-cols-2 grid-rows-2 md:grid-cols-4 gap-4 font-extrabold text-lg">
         {categoryArr.map((category, idx) => (
           <Link

@@ -22,8 +22,8 @@ const Recommend = ({contents}) => {
         contents={
           <div>
             <div className="flex justify-center">
-              <div className="flex justify-center items-center gap-[5%] p-[3%]">
-                <h2 className=" block">오늘의 식당 추천</h2>
+              <div className="flex justify-center gap-[5%] p-[3%] w-[50vw]">
+                <h2 className="flex items-center text-2xl font-semibold mb-3 h-[100%]">오늘의 식당 추천</h2>
                 <input type="text" placeholder={recommend} />
               </div>
             </div>

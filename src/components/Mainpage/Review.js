@@ -38,7 +38,7 @@ const Review = () => {
   return (
     <div className="view_wrap">
       <div>
-        <h2>최신 리뷰</h2>
+        <h2 className="text-2xl font-semibold mb-3">최신 리뷰</h2>
 
         <div className="w-full">
           <div className="review_swiper flex justify-center h-[180px] gap-4">
@@ -73,8 +73,8 @@ const Review = () => {
                           <div className="font-normal text-sm">{review.wdate}</div>
                         </div>
                         <div>{reviewStar(review.star)}</div>
-                        <div className=" text-lg">{review.name}</div>
-                        <div>"{review.comment}"</div>
+                        <div className=" text-xl font-bold">{review.name}</div>
+                        <div className=" text-base">"{review.comment}"</div>
                       </div>
                     }
                   />

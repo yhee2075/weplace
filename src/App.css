@@ -1,9 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&family=Nanum+Gothic&display=swap');
 
 body {
   background-color: #f1f5f9;
+  font-family: 'IBM Plex Sans KR', sans-serif;
+  font-family: 'Nanum Gothic', sans-serif;
 }
 
 .view_wrap {
