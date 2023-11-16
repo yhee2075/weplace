@@ -6,6 +6,7 @@ import {Navigation, Pagination, Scrollbar, A11y} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import Cards from '../common/Cards';
+import {Link} from 'react-router-dom';
 
 const Review = () => {
   const [reviews, setReviews] = useState([]);
@@ -81,7 +82,9 @@ const Review = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
-            <button className="h-[90%] bg-green-500 text-white p-4 rounded-md shadow-md">MORE</button>
+            <Link to="/category">
+              <button className="h-[90%] bg-green-500 text-white p-4 rounded-md shadow-md">MORE</button>
+            </Link>
           </div>
         </div>
       </div>
