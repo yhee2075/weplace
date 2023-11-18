@@ -122,7 +122,7 @@ const CategoryPage = () => {
                       <div>{review.favorite}</div>
                     </div>
                   </div>
-                  <div className="bg-green-100 rounded-md p-4 overflow-y-auto h-[120px] flex items-start flex-wrap gap-2">
+                  <div className="bg-green-100 rounded-md p-4 overflow-y-auto h-[100px] flex items-start flex-wrap gap-2">
                     {review.tag.map((tag, idx) => (
                       <div
                         key={idx}
