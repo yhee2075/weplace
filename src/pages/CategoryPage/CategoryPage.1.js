@@ -6,17 +6,7 @@ import {FaStar, FaFileLines, FaHeart} from 'react-icons/fa6';
 import MainView from '../../components/common/MainView';
 
 // API 동시 관리 방법 짜오기
-/**
- * 카테고리명 = category.name = review.category
- * 태그명 = tag.name = review.tag
- *
- * reviewList filter 로 카테고리명과 태그명 일치하는 데이터만 재배열
- * 재배열 useState로 reviewList로 업데이트
- * map으로 출력
- */
-
 // 함수 행동에 따라 안에 넣기
-
 /**
  * 1. 메인페이지에서 카테고리 클릭하여 넘어온 경우
  *    1) 메인페이지의 카테고리 idx 값 불러오기
@@ -27,7 +17,6 @@ import MainView from '../../components/common/MainView';
  *    1) 기존 카테고리 삭제
  *    2) 클릭한 카테고리 초록색으로 변경
  */
-
 /**
  * 1. 선택한 태그 초록색 (중복선택 가능)
  *    toggle 선택한 idx에 'select' class 부여
@@ -36,41 +25,21 @@ import MainView from '../../components/common/MainView';
  * 2. 선택한 태그 필터
  *    selectCate에 'select' class 추가
  */
-
-/**
- * [tagList CSS 적용]
- * 클릭 시 'select' 포함 여부 확인
- *    button에 onClick이벤트 추가 (e.target 변수 넘겨주기)
- *    if문 이용 => 조건 : 해당 button에 contains 로 'select' 포함 여부 확인
- *
- * 포함 -> 'select' class 삭제, 초록색 배경+흰색 글씨 class 추가
- * 미포함 -> 'select' class 추가, 초록색 배경+흰색 글씨 class 삭제
- *
- */
-
-const CategoryPage = () => {
+export const CategoryPage = () => {
   const location = useLocation();
   // state null 체크 있으면 IDX 넣어주고 null 이면 0 (전체보기) 할당
+  const index = location.state ? location.state.idx : 0;
   const [categoryList, setCategoryList] = useState([]);
   const [tagList, setTagList] = useState([]);
-  const [selectedTagList, setSelectedTagList] = useState([]);
-  const [selectCate, setSelectCate] = useState(0);
+  const [newTagList, setNewTagList] = useState([]);
+  const [selectCate, setSelectCate] = useState(index);
   const [reviewList, setReviewList] = useState([]);
 
   //TODO: 새로고침 시 idx 0(전체보기)으로 바꾸기?
-
   useEffect(() => {
     fetchCateTag();
-  }, []);
-
-  useEffect(() => {
-    const index = location.state ? location.state.idx : 0;
-    handleSelectedCategory(index);
-  }, [categoryList]); // 첫 접속
-
-  useEffect(() => {
     fetchReviewData();
-  }, [selectCate, selectedTagList]);
+  }, [categoryList, selectCate]);
 
   const fetchCateTag = async () => {
     const cateTag = await axios.get(API.categoryfilters);
@@ -79,56 +48,63 @@ const CategoryPage = () => {
     setTagList(categoryTagList.tag);
   };
 
-  const handleSelectedCategory = idx => {
-    const CateBtns = document.querySelectorAll('.categoryBtn');
-    CateBtns.forEach(el => {
-      if (idx === parseInt(el.dataset.idx)) {
-        el.classList.add('bg-green-500', 'text-white');
-        el.classList.remove('bg-white', 'text-green-500');
-      } else {
-        el.classList.remove('bg-green-500', 'text-white');
-        el.classList.add('bg-white', 'text-green-500');
-      }
-    });
-    setSelectCate(idx);
+  // console.log(categoryList);
+  const handleSelectCate = el => {
+    console.log(el.name);
+    const newIndex = parseInt(el.dataset.idx);
+    setSelectCate(newIndex);
   };
 
+  const CateBtns = document.querySelectorAll('.categoryBtn');
+  CateBtns.forEach(el => {
+    if (selectCate === parseInt(el.dataset.idx)) {
+      el.classList.add('bg-green-500', 'text-white');
+      el.classList.remove('bg-white', 'text-green-500');
+    } else {
+      el.classList.remove('bg-green-500', 'text-white');
+      el.classList.add('bg-white', 'text-green-500');
+    }
+  });
+
   const fetchReviewData = async () => {
-    const ReviewDatas = await axios.get(API.categoryList, {
-      params: {
-        category: selectCate,
-        tag: `[${selectedTagList}]`,
-      },
-    });
+    const ReviewDatas = await axios.get(API.categoryList);
     setReviewList(ReviewDatas.data.data);
   };
 
   /**
-   * [selectedTagList]
-   * 클릭한 tag(e.target)에 'select' class 포함 여부 확인 (contains)
+   * 1)클릭한 tag에 'select' class가 있을 경우, 배열(newTagList)에 추가
+   *    클릭한 tag(e.target) contains으로 class 포함 여부 확인
+   *    포함 = > push로 arr에 추가
+   *    미포함 = >
    *
-   *    1) 포함
-   *       push로 해당 idx 배열(selectedTagList)에 추가
+   * 2)클릭한 tag의 idx가 이미 배열에 있을 경우 배열에서 해당 idx를 삭제
+   *    클릭한 tag(e.target) idx가 배열에 있는지 확인
+   *    newTagList를 filter로 해당 idx를 뺀 나머지만 재배열 ???
    *
-   *    2)미포함
-   *      selectedTagList filter 이용 클릭한 tag의 idx과 다른 요소(!==idx)들만 재배열
-   *      selectedTagList 업데이트 (useState)
+   *
    */
-
   const onTagFilterClick = (e, idx) => {
-    let newTagList = selectedTagList;
+    console.log(e.target.classList.contains('select'));
     if (e.target.classList.contains('select')) {
       e.target.classList.remove('select');
       e.target.classList.remove('bg-green-500', 'text-white');
       e.target.classList.add('bg-white', 'text-green-500');
-      newTagList = newTagList.filter(tag => tag !== idx);
+      // setNewTagList(Array.from(new Set(a)));
+      let a = newTagList.filter(tag => tag !== idx);
+      setNewTagList(a);
+      // console.log('deleteTag', deleteTag);
     } else {
       e.target.classList.add('select');
       e.target.classList.remove('bg-white', 'text-green-500');
       e.target.classList.add('bg-green-500', 'text-white');
+
       newTagList.push(idx);
+      // newTagList.filter(tag => tag !== idx);
+      // const onTagList = Array.from(new Set(newTagList));
+      // setNewTagList(onTagList);
     }
-    setSelectedTagList([...newTagList]);
+    // setNewTagList(newTagList);
+    console.log('newTagList', newTagList);
   };
 
   return (
@@ -140,7 +116,7 @@ const CategoryPage = () => {
               // 메인페이지에서 받은 Arr가 아시안까지만 있어, 이후 항목까지 'categoryBtn' class 하나로 묶어줌
               className="categoryBtn bg-white text-green-500 inline px-5 p-2 font-bold text-base rounded-full shadow-sm border-[1px] border-green-400"
               data-idx={0}
-              onClick={e => handleSelectedCategory(parseInt(e.target.dataset.idx))}
+              onClick={e => handleSelectCate(e.target)}
             >
               전체보기
             </button>
@@ -148,7 +124,7 @@ const CategoryPage = () => {
               <button
                 key={category.idx}
                 data-idx={category.idx}
-                onClick={e => handleSelectedCategory(parseInt(e.target.dataset.idx))}
+                onClick={e => handleSelectCate(e.target)}
                 className="categoryBtn bg-white text-green-500 inline px-5 p-2 font-bold text-base rounded-full shadow-sm border-[1px] border-green-400"
               >{`${category.name}`}</button>
             ))}
@@ -163,7 +139,7 @@ const CategoryPage = () => {
                 <button
                   key={tag.idx}
                   className="tag inline px-4 p-1 font-medium text-base rounded-full shadow-sm shadow-green-300 bg-white text-green-500"
-                  onClick={e => onTagFilterClick(e, tag.idx)}
+                  onClick={e => onTagFilterClick(e, tag.name)}
                 >
                   {`# ${tag.name}`}
                 </button>
@@ -215,4 +191,3 @@ const CategoryPage = () => {
     </div>
   );
 };
-export default CategoryPage;
