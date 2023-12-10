@@ -5,18 +5,6 @@ import {useLocation} from 'react-router-dom';
 import {FaStar, FaFileLines, FaHeart} from 'react-icons/fa6';
 import MainView from '../../components/common/MainView';
 
-// API 동시 관리 방법 짜오기
-/**
- * 카테고리명 = category.name = review.category
- * 태그명 = tag.name = review.tag
- *
- * reviewList filter 로 카테고리명과 태그명 일치하는 데이터만 재배열
- * 재배열 useState로 reviewList로 업데이트
- * map으로 출력
- */
-
-// 함수 행동에 따라 안에 넣기
-
 /**
  * 1. 메인페이지에서 카테고리 클릭하여 넘어온 경우
  *    1) 메인페이지의 카테고리 idx 값 불러오기
@@ -56,8 +44,8 @@ const CategoryPage = () => {
   const [selectedTagList, setSelectedTagList] = useState([]);
   const [selectCate, setSelectCate] = useState(0);
   const [reviewList, setReviewList] = useState([]);
-
-  //TODO: 새로고침 시 idx 0(전체보기)으로 바꾸기?
+  const [sortingValue, setSortingValue] = useState('recent');
+  const [selectingSort, setSelectingSort] = useState('최신 순');
 
   useEffect(() => {
     fetchCateTag();
@@ -70,7 +58,7 @@ const CategoryPage = () => {
 
   useEffect(() => {
     fetchReviewData();
-  }, [selectCate, selectedTagList]);
+  }, [selectCate, selectedTagList, sortingValue]);
 
   const fetchCateTag = async () => {
     const cateTag = await axios.get(API.categoryfilters);
@@ -98,6 +86,7 @@ const CategoryPage = () => {
       params: {
         category: selectCate,
         tag: `[${selectedTagList}]`,
+        filter: sortingValue,
       },
     });
     setReviewList(ReviewDatas.data.data);
@@ -129,6 +118,46 @@ const CategoryPage = () => {
       newTagList.push(idx);
     }
     setSelectedTagList([...newTagList]);
+  };
+
+  const sorting = [
+    {
+      name: '최신 순',
+      sortValue: 'recent',
+    },
+    {
+      name: '별점 높은 순',
+      sortValue: 'star',
+    },
+    {
+      name: '가까운 순',
+      sortValue: 'distance',
+    },
+    {
+      name: '리뷰 많은 순',
+      sortValue: 'review',
+    },
+    {
+      name: '찜 많은 순',
+      sortValue: 'favorite',
+    },
+  ];
+
+  const changeSortingValue = target => {
+    let sort = document.querySelectorAll('.sorting');
+    sort.forEach(el => {
+      if (target === null) {
+      } else {
+        if (el.classList.contains('hidden')) {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      }
+    });
+    setSortingValue(sorting.find(sort => String(target.textContent) === sort.name).sortValue);
+    setSelectingSort(target.textContent);
+    console.log('target', target);
   };
 
   return (
@@ -172,43 +201,62 @@ const CategoryPage = () => {
           }
         />
       </div>
+
       <MainView
         contents={
-          <div className="review grid md:grid-cols-3 grid-cols-2 gap-10 mt-4 ">
-            {reviewList.map((review, idx) => (
-              <button key={idx} className="flex h-[240px]">
-                <div className="bg-white rounded-md p-4 w-full shadow-md">
-                  <div className="flex flex-col gap-2 mb-2">
-                    <div className="flex justify-between h-7 items-center">
-                      <div className="px-3 p-1 text-sm bg-green-500 rounded-full text-white shadow-sm">
-                        {review.category}
+          <div>
+            <div
+              className="flex justify-between shadow-md rounded mt-3 w-32 bg-white hover:bg-slate-50 py-2 px-3 text-sm"
+              onClick={e => changeSortingValue(e.target)}
+            >
+              {selectingSort}
+            </div>
+            <ul className="sorting shadow-md rounded mt-3 w-32 bg-white hidden absolute text-sm">
+              {sorting.map((sort, idx) => (
+                <li
+                  key={idx}
+                  onClick={e => changeSortingValue(e.target)}
+                  className="sortingVelue hover:bg-slate-100 p-3 flex justify-between"
+                >
+                  {sort.name}
+                </li>
+              ))}
+            </ul>
+            <div className="review grid md:grid-cols-3 grid-cols-2 gap-10 mt-4 ">
+              {reviewList.map((review, idx) => (
+                <button key={idx} className="flex h-[240px]">
+                  <div className="bg-white rounded-md p-4 w-full shadow-md">
+                    <div className="flex flex-col gap-2 mb-2">
+                      <div className="flex justify-between h-7 items-center">
+                        <div className="px-3 p-1 text-sm bg-green-500 rounded-full text-white shadow-sm">
+                          {review.category}
+                        </div>
+                        <div className=" text-3xl text-gray-500 hover:text-gray-400">♥️</div>
                       </div>
-                      <div className=" text-3xl text-gray-500 hover:text-gray-400">♥️</div>
+                      <div className=" font-extrabold text-xl text-start">{review.name}</div>
+                      <div className="flex gap-2">
+                        <FaStar size="25" color="rgb(250 204 21)" className=" bg-yellow-200 rounded-full p-1" />
+                        <div>{`${parseInt(review.star)}`}</div>
+                        <FaFileLines size="25" color="rgb(96 165 250)" className=" bg-blue-200 rounded-full p-1" />
+                        <div>{review.review}</div>
+                        <FaHeart size="25" color="rgb(244 114 182)" className=" bg-pink-200 rounded-full p-1" />
+                        <div>{review.favorite}</div>
+                      </div>
                     </div>
-                    <div className=" font-extrabold text-xl text-start">{review.name}</div>
-                    <div className="flex gap-2">
-                      <FaStar size="25" color="rgb(250 204 21)" className=" bg-yellow-200 rounded-full p-1" />
-                      <div>{`${parseInt(review.star)}`}</div>
-                      <FaFileLines size="25" color="rgb(96 165 250)" className=" bg-blue-200 rounded-full p-1" />
-                      <div>{review.review}</div>
-                      <FaHeart size="25" color="rgb(244 114 182)" className=" bg-pink-200 rounded-full p-1" />
-
-                      <div>{review.favorite}</div>
+                    <div className="bg-green-100 rounded-md p-4 overflow-y-auto h-[100px] flex items-start flex-wrap gap-2">
+                      {review.tag.map((tag, idx) => (
+                        <div
+                          key={idx}
+                          className="inline px-4 p-1 font-medium text-sm bg-white rounded-full text-green-500 shadow-sm shadow-green-300"
+                        >
+                          {`# ${tag}`}
+                        </div>
+                      ))}
                     </div>
                   </div>
-                  <div className="bg-green-100 rounded-md p-4 overflow-y-auto h-[100px] flex items-start flex-wrap gap-2">
-                    {review.tag.map((tag, idx) => (
-                      <div
-                        key={idx}
-                        className="inline px-4 p-1 font-medium text-sm bg-white rounded-full text-green-500 shadow-sm shadow-green-300"
-                      >
-                        {`# ${tag}`}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </button>
-            ))}
+                </button>
+              ))}
+            </div>
           </div>
         }
       />
