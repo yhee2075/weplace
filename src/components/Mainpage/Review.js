@@ -62,21 +62,23 @@ const Review = () => {
           >
             {reviews.map((review, idx) => (
               <SwiperSlide key={idx}>
-                <Cards
-                  contents={
-                    <div className=" reivew__slide flex flex-col items-start w-full p-1">
-                      <div className="w-full flex justify-between items-center">
-                        <div className=" inline px-3 p-1 font-normal text-xs bg-green-500 rounded-2xl text-white">
-                          {review.menu}
+                <Link to="/detail" state={{idx: review.idx}}>
+                  <Cards
+                    contents={
+                      <div className=" reivew__slide flex flex-col items-start w-full p-1">
+                        <div className="w-full flex justify-between items-center">
+                          <div className=" inline px-3 p-1 font-normal text-xs bg-green-500 rounded-2xl text-white">
+                            {review.menu}
+                          </div>
+                          <div className="font-normal text-sm">{review.wdate}</div>
                         </div>
-                        <div className="font-normal text-sm">{review.wdate}</div>
+                        <div>{reviewStar(review.star)}</div>
+                        <div className=" text-xl font-bold">{review.name}</div>
+                        <div className=" text-base">"{review.comment}"</div>
                       </div>
-                      <div>{reviewStar(review.star)}</div>
-                      <div className=" text-xl font-bold">{review.name}</div>
-                      <div className=" text-base">"{review.comment}"</div>
-                    </div>
-                  }
-                />
+                    }
+                  />
+                </Link>
               </SwiperSlide>
             ))}
           </Swiper>

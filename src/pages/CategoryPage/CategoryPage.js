@@ -4,6 +4,7 @@ import API from '../../api/axios';
 import {useLocation} from 'react-router-dom';
 import {FaStar, FaFileLines, FaHeart} from 'react-icons/fa6';
 import MainView from '../../components/common/MainView';
+import {Link} from 'react-router-dom';
 
 /**
  * 1. 메인페이지에서 카테고리 클릭하여 넘어온 경우
@@ -224,37 +225,39 @@ const CategoryPage = () => {
             </ul>
             <div className="review grid md:grid-cols-3 grid-cols-2 gap-10 mt-4 ">
               {reviewList.map((review, idx) => (
-                <button key={idx} className="flex h-[240px]">
-                  <div className="bg-white rounded-md p-4 w-full shadow-md">
-                    <div className="flex flex-col gap-2 mb-2">
-                      <div className="flex justify-between h-7 items-center">
-                        <div className="px-3 p-1 text-sm bg-green-500 rounded-full text-white shadow-sm">
-                          {review.category}
+                <Link key={idx} to="/detail" state={{idx: review.idx}}>
+                  <button className="flex h-[240px]">
+                    <div className="bg-white rounded-md p-4 w-full shadow-md">
+                      <div className="flex flex-col gap-2 mb-2">
+                        <div className="flex justify-between h-7 items-center">
+                          <div className="px-3 p-1 text-sm bg-green-500 rounded-full text-white shadow-sm">
+                            {review.category}
+                          </div>
+                          <div className=" text-3xl text-gray-500 hover:text-gray-400">♥️</div>
                         </div>
-                        <div className=" text-3xl text-gray-500 hover:text-gray-400">♥️</div>
+                        <div className=" font-extrabold text-xl text-start">{review.name}</div>
+                        <div className="flex gap-2">
+                          <FaStar size="25" color="rgb(250 204 21)" className=" bg-yellow-200 rounded-full p-1" />
+                          <div>{`${parseInt(review.star)}`}</div>
+                          <FaFileLines size="25" color="rgb(96 165 250)" className=" bg-blue-200 rounded-full p-1" />
+                          <div>{review.review}</div>
+                          <FaHeart size="25" color="rgb(244 114 182)" className=" bg-pink-200 rounded-full p-1" />
+                          <div>{review.favorite}</div>
+                        </div>
                       </div>
-                      <div className=" font-extrabold text-xl text-start">{review.name}</div>
-                      <div className="flex gap-2">
-                        <FaStar size="25" color="rgb(250 204 21)" className=" bg-yellow-200 rounded-full p-1" />
-                        <div>{`${parseInt(review.star)}`}</div>
-                        <FaFileLines size="25" color="rgb(96 165 250)" className=" bg-blue-200 rounded-full p-1" />
-                        <div>{review.review}</div>
-                        <FaHeart size="25" color="rgb(244 114 182)" className=" bg-pink-200 rounded-full p-1" />
-                        <div>{review.favorite}</div>
+                      <div className="bg-green-100 rounded-md p-4 overflow-y-auto h-[100px] flex items-start flex-wrap gap-2">
+                        {review.tag.map((tag, idx) => (
+                          <div
+                            key={idx}
+                            className="inline px-4 p-1 font-medium text-sm bg-white rounded-full text-green-500 shadow-sm shadow-green-300"
+                          >
+                            {`# ${tag}`}
+                          </div>
+                        ))}
                       </div>
                     </div>
-                    <div className="bg-green-100 rounded-md p-4 overflow-y-auto h-[100px] flex items-start flex-wrap gap-2">
-                      {review.tag.map((tag, idx) => (
-                        <div
-                          key={idx}
-                          className="inline px-4 p-1 font-medium text-sm bg-white rounded-full text-green-500 shadow-sm shadow-green-300"
-                        >
-                          {`# ${tag}`}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </button>
+                  </button>
+                </Link>
               ))}
             </div>
           </div>
