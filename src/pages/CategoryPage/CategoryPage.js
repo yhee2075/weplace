@@ -226,7 +226,7 @@ const CategoryPage = () => {
             <div className="review grid md:grid-cols-3 grid-cols-2 gap-10 mt-4 ">
               {reviewList.map((review, idx) => (
                 <Link key={idx} to="/detail" state={{idx: review.idx}}>
-                  <button className="flex h-[240px]">
+                  <button className="flex h-[240px] w-[100%] justify-stretch items-stretch">
                     <div className="bg-white rounded-md p-4 w-full shadow-md">
                       <div className="flex flex-col gap-2 mb-2">
                         <div className="flex justify-between h-7 items-center">

@@ -4,7 +4,7 @@ import {useLocation} from 'react-router-dom';
 import axios from 'axios';
 import API from '../api/axios';
 import Card from '../components/common/Cards';
-import {FaStar, FaHeart, FaLocationDot} from 'react-icons/fa6';
+import {FaStar, FaHeart, FaLocationDot, FaRegThumbsDown, FaRegThumbsUp, FaAngleDown, FaAngleUp} from 'react-icons/fa6';
 
 const DetailPage = () => {
   const location = useLocation();
@@ -12,10 +12,10 @@ const DetailPage = () => {
   const [shopInfo, setShopInfo] = useState([]);
   const [reviewTags, setReviewTags] = useState([]);
   const [reviewDetail, setReviewDetail] = useState([]);
+  const [moreComment, setMoreComment] = useState(false);
 
   useEffect(() => {
     fetchReviewData();
-    console.log('useEffect');
   }, []);
 
   const fetchReviewData = async () => {
@@ -29,7 +29,6 @@ const DetailPage = () => {
     setReviewDetail(shopList.data.data.review);
   };
   console.log('reviewData', reviewDetail);
-  console.log(idx);
 
   const reviewStar = n => {
     const arr = [];
@@ -43,10 +42,15 @@ const DetailPage = () => {
     return arr.join('');
   };
 
+  const handleMoreCommentSwitch = (e, idx) => {
+    setMoreComment(!moreComment);
+    e.nextSibling.classList.toggle('hidden');
+    console.log(idx);
+  };
+
   return (
     <div>
       <div className="mt-20 bg-green-100 pb-10">
-        {console.log('return')}
         <MainView
           contents={
             <div className="pt-8">
@@ -134,6 +138,34 @@ const DetailPage = () => {
                             className="inline px-4 p-1 font-bold text-sm bg-white rounded-full text-green-500 border border-green-500 "
                           >{`# ${tag}`}</div>
                         ))}
+                      </div>
+                      <div className="comment_btn" onClick={e => handleMoreCommentSwitch(e.currentTarget, idx)}>
+                        {moreComment ? (
+                          <FaAngleUp color="rgb(34 197 94)" size="25" />
+                        ) : (
+                          <FaAngleDown color="rgb(34 197 94)" size="25" />
+                        )}
+                      </div>
+                      <div className="reviewCommet_wrap hidden">
+                        <div className="flex justify-between gap-2 items-stretch text-sm">
+                          <div className="p-3 rounded border bg-gray-50 w-[50%] flex items-center">
+                            {' '}
+                            <FaRegThumbsUp
+                              size="35"
+                              color="rgb(45 212 191)"
+                              className=" bg-teal-100 rounded-full p-2 mr-2"
+                            />
+                            <div className="w-[90%]">{review.comment_good}</div>
+                          </div>
+                          <div className="p-3 rounded border bg-gray-50 w-[50%] flex items-center">
+                            <FaRegThumbsDown
+                              size="35"
+                              color="rgb(252 165 165)"
+                              className=" bg-red-100 rounded-full p-2 mr-2"
+                            />
+                            <div className="w-[90%]">{review.comment_bad}</div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   }
