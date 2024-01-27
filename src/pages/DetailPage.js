@@ -94,16 +94,16 @@ const DetailPage = () => {
             <div className="flex gap-4 my-5">
               <Card
                 contents={
-                  <div className="flex flex-col justify-center items-center">
+                  <div className="flex flex-col justify-center items-center h-[87px]">
                     <FaStar size="35" color="rgb(250 204 21)" className=" bg-yellow-200 rounded-full p-2" />
-                    <div className="font-bold text-lg">{shopInfo.star}</div>
+                    <div className="font-bold text-lg">{shopInfo.star ? shopInfo.star : '0'}</div>
                     <div>별점</div>
                   </div>
                 }
               />
               <Card
                 contents={
-                  <div className="flex flex-col justify-center items-center">
+                  <div className="flex flex-col justify-center items-center h-[87px]">
                     <FaHeart size="35" color="rgb(244 114 182)" className=" bg-pink-200 rounded-full p-2" />
                     <div className="font-bold text-lg">{shopInfo.favorite}</div>
                     <div>찜</div>
@@ -112,7 +112,7 @@ const DetailPage = () => {
               />
               <Card
                 contents={
-                  <div className="flex flex-col justify-center items-center">
+                  <div className="flex flex-col justify-center items-center h-[87px]">
                     <a href={`${shopInfo.url}`} target="blank">
                       <FaLocationDot size="35" color="rgb(96 165 250)" className=" bg-blue-200 rounded-full p-2" />
                     </a>

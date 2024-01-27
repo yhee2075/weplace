@@ -3,7 +3,7 @@ import Button from './common/Button';
 import MainView from './common/MainView';
 const Header = () => {
   return (
-    <div className="w-full border-b border-gray-200 bg-white fixed top-0">
+    <div className="w-full border-b border-gray-200 bg-white fixed top-0 z-[100]">
       <MainView
         contents={
           <div className="flex justify-between items-center h-20 p-2">

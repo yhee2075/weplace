@@ -238,7 +238,7 @@ const CategoryPage = () => {
                         <div className=" font-extrabold text-xl text-start">{review.name}</div>
                         <div className="flex gap-2">
                           <FaStar size="25" color="rgb(250 204 21)" className=" bg-yellow-200 rounded-full p-1" />
-                          <div>{`${parseInt(review.star)}`}</div>
+                          <div>{`${parseInt(review.star ? review.star : '0')}`}</div>
                           <FaFileLines size="25" color="rgb(96 165 250)" className=" bg-blue-200 rounded-full p-1" />
                           <div>{review.review}</div>
                           <FaHeart size="25" color="rgb(244 114 182)" className=" bg-pink-200 rounded-full p-1" />
