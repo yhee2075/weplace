@@ -4,7 +4,17 @@ import {useLocation} from 'react-router-dom';
 import axios from 'axios';
 import API from '../api/axios';
 import Card from '../components/common/Cards';
-import {FaStar, FaHeart, FaLocationDot, FaRegThumbsDown, FaRegThumbsUp, FaAngleDown, FaAngleUp} from 'react-icons/fa6';
+import {
+  FaStar,
+  FaHeart,
+  FaLocationDot,
+  FaRegThumbsDown,
+  FaRegThumbsUp,
+  FaAngleDown,
+  FaAngleUp,
+  FaImage,
+  FaMagnifyingGlassPlus,
+} from 'react-icons/fa6';
 
 const DetailPage = () => {
   const location = useLocation();
@@ -49,6 +59,8 @@ const DetailPage = () => {
     });
     e.nextSibling.classList.toggle('hidden');
   };
+
+  console.log(reviewDetail.length === 3);
 
   return (
     <div>
@@ -124,8 +136,11 @@ const DetailPage = () => {
                         <div>{review.wdate}</div>
                       </div>
                       <div className="flex justify-between">
-                        <div className="inline px-4 p-1 font-medium text-sm rounded-full shadow-sm shadow-green-300 text-white bg-green-500">
-                          {review.menu}
+                        <div className="flex gap-2 items-center">
+                          <div className="inline px-4 p-1 font-medium text-sm rounded-full shadow-sm shadow-green-300 text-white bg-green-500">
+                            {review.menu}
+                          </div>
+                          <div>{review.image.length !== 0 ? <FaImage color="rgb(34 197 94)" /> : ''}</div>
                         </div>
                         <div className="text-yellow-400 text-xl">{reviewStar(review.star)}</div>
                       </div>
@@ -138,7 +153,10 @@ const DetailPage = () => {
                           >{`# ${tag}`}</div>
                         ))}
                       </div>
-                      <div className="comment_btn" onClick={e => handleMoreCommentSwitch(e.currentTarget, idx)}>
+                      <div
+                        className="comment_btn flex justify-end"
+                        onClick={e => handleMoreCommentSwitch(e.currentTarget, idx)}
+                      >
                         <FaAngleDown
                           color="rgb(34 197 94)"
                           size="25"
@@ -154,27 +172,44 @@ const DetailPage = () => {
                           }`}
                         />
                       </div>
-                      <div
-                        className="reviewCommet_wrap hidden"
-                        onClick={e => handleMoreCommentSwitch(e.currentTarget, idx)}
-                      >
-                        <div className="flex justify-between gap-2 items-stretch text-sm">
-                          <div className="p-3 rounded border bg-gray-50 w-[50%] flex items-center">
-                            {' '}
-                            <FaRegThumbsUp
-                              size="35"
-                              color="rgb(45 212 191)"
-                              className=" bg-teal-100 rounded-full p-2 mr-2"
-                            />
-                            <div className="w-[90%]">{review.comment_good}</div>
+                      <div className="reviewCommet_wrap hidden">
+                        <div className="">
+                          <div className="flex justify-between gap-2 items-stretch text-sm w-full">
+                            <div className="p-3 rounded border bg-gray-50 w-[50%] flex items-center">
+                              {' '}
+                              <FaRegThumbsUp
+                                size="35"
+                                color="rgb(45 212 191)"
+                                className=" bg-teal-100 rounded-full p-2 mr-2"
+                              />
+                              <div className="w-[90%]">{review.comment_good}</div>
+                            </div>
+                            <div className="p-3 rounded border bg-gray-50 w-[50%] flex items-center">
+                              <FaRegThumbsDown
+                                size="35"
+                                color="rgb(252 165 165)"
+                                className=" bg-red-100 rounded-full p-2 mr-2"
+                              />
+                              <div className="w-[90%]">{review.comment_bad}</div>
+                            </div>
                           </div>
-                          <div className="p-3 rounded border bg-gray-50 w-[50%] flex items-center">
-                            <FaRegThumbsDown
-                              size="35"
-                              color="rgb(252 165 165)"
-                              className=" bg-red-100 rounded-full p-2 mr-2"
-                            />
-                            <div className="w-[90%]">{review.comment_bad}</div>
+                          <div className="flex gap-3 mt-2">
+                            {review.image.map(imgList => (
+                              <div className="">
+                                <div className="relative rounded border flex items-center">
+                                  <img
+                                    key={idx}
+                                    src={imgList}
+                                    alt="reviewImg"
+                                    className="peer hover:opacity-60 h-28 w-24 object-contain p-1"
+                                  />
+                                  <FaMagnifyingGlassPlus
+                                    color="rgb(34 197 94)"
+                                    className="opacity-0 peer-hover:opacity-100 hover:opacity-100 h-6 w-6 absolute top-[40%] left-[40%]"
+                                  />
+                                </div>
+                              </div>
+                            ))}
                           </div>
                         </div>
                       </div>
