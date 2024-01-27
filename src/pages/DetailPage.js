@@ -12,7 +12,7 @@ const DetailPage = () => {
   const [shopInfo, setShopInfo] = useState([]);
   const [reviewTags, setReviewTags] = useState([]);
   const [reviewDetail, setReviewDetail] = useState([]);
-  const [moreComment, setMoreComment] = useState(false);
+  const [selectedSwitch, setSelectedSwitch] = useState(null);
 
   useEffect(() => {
     fetchReviewData();
@@ -28,7 +28,6 @@ const DetailPage = () => {
     setReviewTags(shopList.data.data.shopInfo.tag);
     setReviewDetail(shopList.data.data.review);
   };
-  console.log('reviewData', reviewDetail);
 
   const reviewStar = n => {
     const arr = [];
@@ -43,9 +42,12 @@ const DetailPage = () => {
   };
 
   const handleMoreCommentSwitch = (e, idx) => {
-    setMoreComment(!moreComment);
+    setSelectedSwitch(idx);
+    const MoreCommentSwitch = document.querySelectorAll('.MoreCommentSwitch');
+    MoreCommentSwitch.forEach(el => {
+      el.classList.toggle('hidden');
+    });
     e.nextSibling.classList.toggle('hidden');
-    console.log(idx);
   };
 
   return (
@@ -116,10 +118,7 @@ const DetailPage = () => {
                     <div className="w-full flex flex-col gap-5">
                       <div className="flex border rounded-full px-2 py-1 items-center justify-between w-full font-medium">
                         <div className="flex items-center gap-5">
-                          <div
-                            className="bg-[url(http://place-api.weballin.com/uploads/profile/0879E9D0-71DD-4543-AA35-D5C0C999D57A.jpeg)] h-12 w-12 rounded-full bg-cover
-                      "
-                          ></div>
+                          <img src={review.thumb} alt="profileImg" className="h-12 w-12 rounded-full bg-cover" />
                           <div>{review.name}</div>
                         </div>
                         <div>{review.wdate}</div>
@@ -140,13 +139,25 @@ const DetailPage = () => {
                         ))}
                       </div>
                       <div className="comment_btn" onClick={e => handleMoreCommentSwitch(e.currentTarget, idx)}>
-                        {moreComment ? (
-                          <FaAngleUp color="rgb(34 197 94)" size="25" />
-                        ) : (
-                          <FaAngleDown color="rgb(34 197 94)" size="25" />
-                        )}
+                        <FaAngleDown
+                          color="rgb(34 197 94)"
+                          size="25"
+                          className={`${
+                            selectedSwitch === null ? '' : selectedSwitch === idx ? 'MoreCommentSwitch hidden' : ''
+                          }`}
+                        />
+                        <FaAngleUp
+                          color="rgb(34 197 94)"
+                          size="25"
+                          className={`${
+                            selectedSwitch === null ? 'hidden' : selectedSwitch === idx ? 'MoreCommentSwitch' : 'hidden'
+                          }`}
+                        />
                       </div>
-                      <div className="reviewCommet_wrap hidden">
+                      <div
+                        className="reviewCommet_wrap hidden"
+                        onClick={e => handleMoreCommentSwitch(e.currentTarget, idx)}
+                      >
                         <div className="flex justify-between gap-2 items-stretch text-sm">
                           <div className="p-3 rounded border bg-gray-50 w-[50%] flex items-center">
                             {' '}
